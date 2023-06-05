@@ -38,8 +38,9 @@
 
 ![Dino]( https://github.com/NAGESHGOWDA1993/NAGESHGOWDA1993/blob/main/dino.gif)
 
-<h3 align="left">Support:</h3>
-<p><a href="https://www.buymeacoffee.com/nageshagowr"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="nageshagowr" /></a></p><br><br>
+<h3 align="left">Support:</h3>If you like what I do, support me by buying me a Coffee
+
+<p> <a href="https://www.buymeacoffee.com/nageshagowr"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="nageshagowr" /></a></p><br><br>
 
 
 <p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=NAGESHGOWDA1993&" alt="nageshagowda1993" /></p>
