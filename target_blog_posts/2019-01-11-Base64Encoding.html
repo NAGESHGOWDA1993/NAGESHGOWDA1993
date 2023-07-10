@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mr David Betteridge</title>
+    <link rel="stylesheet" type="text/css" href="/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="item-header_logo">
+            <a href="/index.html"><img src="/images/david_betteridge.png" alt="Mr David Betteridge"
+                    class="top_left_logo"></a>
+        </div>
+        <div class="item-header_text">
+            <span>David Betteridge</span>
+
+            <div class="filler"></div>
+
+            <div class="theme-switch-wrapper">
+                <em>Theme</em>
+
+                <select name="theme-selector" id="theme-selector">
+                    <option value="blue">Blue</option>
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                </select>
+            </div>
+        </div>
+
+
+
+        <div class="item-sidebar">
+            <ul>
+                <li><a href="/target_files/about.html">About me</a></li>
+                <li><a href="/target_files/running.html">My running</a></li>
+                <li><a href="/target_files/london_to_paris.html">London to Paris</a></li>
+                <li><a href="/familybikerides/index.html">Family bike rides</a></li>
+                <li><a href="/target_files/blogs.html">My blog</a></li>
+                <li><a href="https://www.meetup.com/York-Code-Dojo/">York Code Dojo</a></li>
+                <li><a href="https://yorkdevelopers.org">York Developers</a></li>
+                <li><a href="https://github.com/DavidBetteridge">My github account</a></li>
+                <li><a href="/resources">Some useful resources</a></li>
+            </ul>
+        </div>
+        <div class="item-content">
+            <div class="content-container">
+                <h2>Encoding</h2>
+<p>Following on from yesterday's Huffman coding,  I thought that I would write a Base64 encoder in C#.</p>
+<p>At first glance this seems straight forward</p>
+<ol>
+<li>Convert each character in the input text into it's ASCII value</li>
+<li>Convert the ascii value into an 8 bit (octet) binary string (left pad with 0s as needed)</li>
+<li>Join all the binary strings together</li>
+<li>Chuck the long string into 6 bit (sextet) blocks</li>
+<li>Lookup the character which represents each block</li>
+</ol>
+<p>This can almost be written in a single linq statement however....  the issue comes when the length of the long string does not divide evenly into 6.  For example the string "AB" would only produce 16 (2x8) bits and 16/6 has a reminder of 4.</p>
+<p>In order to be able to pad out the final block, we have to work on the string in blocks of 3 octets (24bits or 4 sextets) at a time.</p>
+<ol>
+<li>Convert each character in the input text into it's ASCII value</li>
+<li>Convert the ascii value into an 8 bit (octet) binary string (left pad with 0s as needed)</li>
+<li>Join all the binary strings together</li>
+<li>Chuck the long string into 24 bit blocks (3 octets/4 sextets)
+        If the length of the block is 8 characters pad the final sextet and append == to the result.
+        If the length of the block is 16 characters pad the final sextet and append = to the result.</li>
+<li>Lookup the character which represents each sextet</li>
+</ol>
+<p>Steps 1-3 are straight forward with the following Linq</p>
+<p><code>c#
+var asBinary = string.Join("", text.Select(c =&gt; Convert.ToString(c, 2).PadLeft(8, '0')));</code></p>
+<p>In order to work on the binary string in blocks of 3 octets we use a helper function.  This has to handle the case when the final block is less then 24 bits long.</p>
+<p><code>c#
+private IEnumerable&lt;string&gt; ThreeOctets(string binaryText)
+{
+    var offset = 0;
+    while (offset &lt; binaryText.Length)
+    {
+        if (offset + 24 &gt;= binaryText.Length)
+            yield return binaryText.Substring(offset);
+        else
+            yield return binaryText.Substring(offset, 24);
+        offset += 24;
+    }
+}</code></p>
+<p>We use a switch statement to handle the three possible padding cases</p>
+<p>```c#
+var result = "";
+foreach (var block in ThreeOctets(asBinary))
+{
+    switch (block.Length)
+    {
+        case 8:
+            result += ConvertSextet(0, block) +
+                      ConvertSextet(1, block) +
+                        "==";
+            break;
+        case 16:
+            result += ConvertSextet(0, block) +
+                      ConvertSextet(1, block) +
+                      ConvertSextet(2, block) +
+                      "=";
+            break;</p>
+<pre><code>    default:
+        result += ConvertSextet(0, block) +
+                  ConvertSextet(1, block) +
+                  ConvertSextet(2, block) +
+                  ConvertSextet(3, block);
+        break;
+}
+</code></pre>
+<p>}
+```</p>
+<p>The <strong>ConvertSextet</strong> function handles extracting the 6 bits which make up the sextet from the 24bit string.  It then converts the 6 bits into base10,  and uses that to look up it's matching character.  This function also has to take care to right-pad the sextet with zeros if the input block is too short. </p>
+<p><code>c#
+private string ConvertSextet(int sextetNumber, string block)
+{
+    var blockStart = sextetNumber * 6;
+    if (blockStart + 6 &gt;= block.Length)
+        return Lookup(Convert.ToByte(block.Substring(blockStart).PadRight(6, '0'), 2)).ToString();
+    else
+        return Lookup(Convert.ToByte(block.Substring(blockStart, 6), 2)).ToString();
+}</code></p>
+<p>Finally we have the lookup function</p>
+<p><code>c#
+private char Lookup(byte index)
+{
+    if (index &lt;= 25)
+        return (char)(index + 'A');
+    else if (index &lt;= 51)
+        return (char)(index - 26 + 'a');
+    else if (index &lt;= 61)
+        return (char)(index - 52 + '0');
+    else if (index &lt;= 62)
+        return '+';
+    else if (index &lt;= 63)
+        return '/';
+    else
+        return ' ';
+}</code></p>
+<h2>Decoding</h2>
+<p>To convert back from Base64 it's the same process but in reverse.  Again the complication is around handling any padding which was added by the encoding process.</p>
+<p>We begin by writing a function which given an encoded character,  will look up it's value and return it as binary (6 bits).</p>
+<p>```c#
+private string LookupCharAsBinary(char c)
+{
+    var base10 = 0;</p>
+<pre><code>if (c &gt;= 'A' &amp;&amp; c &lt;= 'Z')
+    base10 = c - 'A';
+else if (c &gt;= 'a' &amp;&amp; c &lt;= 'z')
+    base10 = c - 'a' + 26;
+else if (c &gt;= '0' &amp;&amp; c &lt;= '9')
+    base10 = c - '0' + 52;
+else if (c == '+')
+    base10 = 62;
+else if (c == '/')
+    base10 = 63;
+
+return Convert.ToString(base10, 2).PadLeft(6, '0');
+</code></pre>
+<p>}
+```</p>
+<p>The complete input string is converted into binary by looking at blocks of four character at a time.  This then allows us to undo any padding.</p>
+<p><code>c#
+var asBinary = "";
+foreach (var block in FourCharacters(encodedText))
+{
+    if (block.EndsWith("=="))
+    {
+        asBinary += LookupCharAsBinary(block[0]);
+        asBinary += LookupCharAsBinary(block[1]).Substring(0, 2);
+    }
+    else if (block.EndsWith("="))
+    {
+        asBinary += LookupCharAsBinary(block[0]);
+        asBinary += LookupCharAsBinary(block[1]);
+        asBinary += LookupCharAsBinary(block[2]).Substring(0, 4);
+    }
+    else
+    {
+        asBinary += LookupCharAsBinary(block[0]);
+        asBinary += LookupCharAsBinary(block[1]);
+        asBinary += LookupCharAsBinary(block[2]);
+        asBinary += LookupCharAsBinary(block[3]);
+    }
+}</code></p>
+<p>Once we have our complete binary string,  we can walk along it an octet at a time converting it into an ASCII character.</p>
+<p><code>c#
+var asText = "";
+foreach (var octet in Octets(asBinary))
+    asText += ((char)Convert.ToByte(octet, 2)).ToString();</code></p>
+<p>The complete code with tests is available on <a href="https://github.com/DavidBetteridge/Base64Encoder">github</a> </p>
+            </div>
+        </div>
+    </div>
+    <script type='text/javascript' src='/theme.js'></script>
+
+</body>
+
+</html>

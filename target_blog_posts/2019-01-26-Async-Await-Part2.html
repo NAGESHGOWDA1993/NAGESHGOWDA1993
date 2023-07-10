@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mr David Betteridge</title>
+    <link rel="stylesheet" type="text/css" href="/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="item-header_logo">
+            <a href="/index.html"><img src="/images/david_betteridge.png" alt="Mr David Betteridge"
+                    class="top_left_logo"></a>
+        </div>
+        <div class="item-header_text">
+            <span>David Betteridge</span>
+
+            <div class="filler"></div>
+
+            <div class="theme-switch-wrapper">
+                <em>Theme</em>
+
+                <select name="theme-selector" id="theme-selector">
+                    <option value="blue">Blue</option>
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                </select>
+            </div>
+        </div>
+
+
+
+        <div class="item-sidebar">
+            <ul>
+                <li><a href="/target_files/about.html">About me</a></li>
+                <li><a href="/target_files/running.html">My running</a></li>
+                <li><a href="/target_files/london_to_paris.html">London to Paris</a></li>
+                <li><a href="/familybikerides/index.html">Family bike rides</a></li>
+                <li><a href="/target_files/blogs.html">My blog</a></li>
+                <li><a href="https://www.meetup.com/York-Code-Dojo/">York Code Dojo</a></li>
+                <li><a href="https://yorkdevelopers.org">York Developers</a></li>
+                <li><a href="https://github.com/DavidBetteridge">My github account</a></li>
+                <li><a href="/resources">Some useful resources</a></li>
+            </ul>
+        </div>
+        <div class="item-content">
+            <div class="content-container">
+                <p>Create a console app with the following code.  (You will need to set the language version to C# 7.1 or greater)</p>
+<p>```c#
+static async Task Main(string[] args)
+{
+    var sw = new Stopwatch();
+    sw.Start();</p>
+<pre><code>await ProcessWhichTakes2Seconds();
+
+Thread.Sleep(TimeSpan.FromSeconds(1));
+Console.WriteLine("Completed 1 second delay");
+
+sw.Stop();
+Console.WriteLine($"Time taken {Math.Round(sw.Elapsed.TotalSeconds, 2)}s");
+Console.ReadKey(true);
+</code></pre>
+<p>}</p>
+<p>private static async Task ProcessWhichTakes2Seconds()
+{
+    await Task.Run(() =&gt; Thread.Sleep(TimeSpan.FromSeconds(2)));
+    Console.WriteLine("Completed ProcessWhichTakes2Seconds");
+}
+```        </p>
+<p>Read through the code and work out which you expect it to do.  Then run it.</p>
+<p>You should see output along the lines of 
+<code>Completed ProcessWhichTakes2Seconds
+Completed 1 second delay
+Time taken 3.09s</code></p>
+<p>Question - how can we speed this code up?</p>
+<p>Try</p>
+<p>```c#
+static async Task Main(string[] args)
+{
+    var sw = new Stopwatch();
+    sw.Start();</p>
+<pre><code>var task = ProcessWhichTakes2Seconds();
+
+Thread.Sleep(TimeSpan.FromSeconds(1));
+Console.WriteLine("Completed 1 second delay");
+
+await task;
+
+sw.Stop();
+Console.WriteLine($"Time taken {Math.Round(sw.Elapsed.TotalSeconds, 2)}s");
+Console.ReadKey(true);
+</code></pre>
+<p>}
+```        </p>
+            </div>
+        </div>
+    </div>
+    <script type='text/javascript' src='/theme.js'></script>
+
+</body>
+
+</html>

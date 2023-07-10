@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mr David Betteridge</title>
+    <link rel="stylesheet" type="text/css" href="/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="item-header_logo">
+            <a href="/index.html"><img src="/images/david_betteridge.png" alt="Mr David Betteridge"
+                    class="top_left_logo"></a>
+        </div>
+        <div class="item-header_text">
+            <span>David Betteridge</span>
+
+            <div class="filler"></div>
+
+            <div class="theme-switch-wrapper">
+                <em>Theme</em>
+
+                <select name="theme-selector" id="theme-selector">
+                    <option value="blue">Blue</option>
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                </select>
+            </div>
+        </div>
+
+
+
+        <div class="item-sidebar">
+            <ul>
+                <li><a href="/target_files/about.html">About me</a></li>
+                <li><a href="/target_files/running.html">My running</a></li>
+                <li><a href="/target_files/london_to_paris.html">London to Paris</a></li>
+                <li><a href="/familybikerides/index.html">Family bike rides</a></li>
+                <li><a href="/target_files/blogs.html">My blog</a></li>
+                <li><a href="https://www.meetup.com/York-Code-Dojo/">York Code Dojo</a></li>
+                <li><a href="https://yorkdevelopers.org">York Developers</a></li>
+                <li><a href="https://github.com/DavidBetteridge">My github account</a></li>
+                <li><a href="/resources">Some useful resources</a></li>
+            </ul>
+        </div>
+        <div class="item-content">
+            <div class="content-container">
+                <p>Following a conversation with David Turner after the <a href="https://meetup.com/YorkCodeDojo">YorkCodeDojo</a> on Wednesday night I thought I would have a go at implementing Huffman encoding using C#</p>
+<p>As I couldn't remember the finer details (University was a long time ago),  it was off to Wikipedia to look it up. https://en.wikipedia.org/wiki/Huffman_coding</p>
+<p>My first step was to order the letters by the frequency in which they occured in the source text.  At this point I got a bit sidetracked as I wondered if using Linq would be a lot slower than writing a manual loop.</p>
+<p>I now have a nice reuseable timing function :-)</p>
+<p>```c#
+internal static T Time<T>(Func<T> function)
+{
+    var sw = new Stopwatch();
+    sw.Start();
+    var result = function();
+    sw.Stop();</p>
+<pre><code>Console.WriteLine($"{sw.Elapsed.TotalMilliseconds}ms");
+
+return result;
+</code></pre>
+<p>}
+```
+(It turns out for this size of text there is no difference in performance)</p>
+<p>The Linq code is </p>
+<p><code>c#
+static IEnumerable&lt;LeafNode&gt; OrderLettersByFrequencyUsingLinq(IEnumerable&lt;char&gt; fileText)
+{
+    return fileText.GroupBy(c =&gt; c)
+                    .Select(grp =&gt; new LeafNode(grp.Key, grp.Count()))
+                    .OrderBy(grp =&gt; grp.Weight);
+}</code></p>
+<p>Once you have the letters sorted into frequency order,  you can build a tree using two queues.</p>
+<p>There are two types of nodes in the tree
+1.  LeafNodes which are the nodes which represent a letter and it's original weight.<br />
+2.  CombinedNodes which combine two nodes together.</p>
+<p>Both <strong>LeafNodes</strong> and <strong>CombinedNodes</strong> implement a <strong>INode</strong> interface.</p>
+<p>I started off with a helper function which returns the lowest two values from the queues.</p>
+<p><code>c#
+private static INode GetLowestItem(Queue&lt;LeafNode&gt; leafQueue, Queue&lt;CombinedNode&gt; combinedQueue)
+{
+    if (leafQueue.Count() == 0)
+        return combinedQueue.Dequeue();
+    else if (combinedQueue.Count() == 0)
+        return leafQueue.Dequeue();
+    else if (leafQueue.Peek().Weight &lt; combinedQueue.Peek().Weight)
+        return leafQueue.Dequeue();
+    else
+        return combinedQueue.Dequeue();
+}</code></p>
+<p>Which then makes building the tree straight forward.  We keep combining nodes until only 1 node remains.
+```c#
+private static CombinedNode BuildTree(IEnumerable<LeafNode> lettersByFrequency)
+{
+    var leafQueue = new Queue<LeafNode>();
+    var combinedQueue = new Queue<CombinedNode>();</p>
+<pre><code>foreach (var item in lettersByFrequency)
+    leafQueue.Enqueue(item);
+
+while (leafQueue.Count() + combinedQueue.Count() &gt; 1)
+{
+    var lhs = GetLowestItem(leafQueue, combinedQueue);
+    var rhs = GetLowestItem(leafQueue, combinedQueue);
+    var combinedNode = new CombinedNode(lhs, rhs);
+    combinedQueue.Enqueue(combinedNode);
+}
+return combinedQueue.Dequeue();
+</code></pre>
+<p>}
+```</p>
+<p>Once we have the tree we can recurse down it to generate the unique code for each letter
+```c#
+private static void DisplayTree(INode node, string parentValue = "")
+{
+    if (node is LeafNode leafNode)
+        Console.WriteLine($"{leafNode.Key} is {parentValue}");</p>
+<pre><code>if (node is CombinedNode combinedNode)
+{
+    DisplayTree(combinedNode.LHS, parentValue + "0");
+    DisplayTree(combinedNode.RHS, parentValue + "1");
+}
+</code></pre>
+<p>}
+```</p>
+<p>To decode the message is quite fun.  First of all you must build a tree with the same structure as you used to encode it.  There is a bit in the article about the best way to transmit that. You then start at the beginning of the encoded text and walk the tree based on the current 0 or 1 value.  Once you reach a leaf node, you output the character and return to the top of the tree.</p>
+<p>```c#
+private static string DecodeText(CombinedNode tree, string encodedText)
+{
+    var result = "";
+    var offset = 0;
+    INode currentNode = tree;
+    while (offset &lt; encodedText.Length)
+    {
+        if (currentNode is CombinedNode combinedNode)
+        {
+            if (encodedText[offset] == '0')
+                currentNode = combinedNode.LHS;
+            else
+                currentNode = combinedNode.RHS;
+        }</p>
+<pre><code>    if (currentNode is LeafNode leafNode)
+    {
+        result += leafNode.Key;
+        currentNode = tree;
+    }
+
+    offset++;
+}
+return result;
+</code></pre>
+<p>}</p>
+<p>```</p>
+<p>The complete code is available on <a href="https://github.com/DavidBetteridge/HuffmanCoding">github</a> </p>
+            </div>
+        </div>
+    </div>
+    <script type='text/javascript' src='/theme.js'></script>
+
+</body>
+
+</html>

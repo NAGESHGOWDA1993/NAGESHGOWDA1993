@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MyRuns - David Betteridge</title>
+        <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+        <link rel="stylesheet" type="text/css" href="running.css">
+    </head>
+    <body>
+
+        <div class="row">
+
+            <div class="column" id='myMap' style='height: 100vh;'></div>
+
+            <div class="column" id='printoutPanel'>
+
+                <input class="routeAll" type="checkbox">Select All</input>
+
+                <div class="sectionHeader">Hardmoors</div>
+                <ul>
+                    <li><input class="route" type="checkbox" value="Wolds_Way_Part_1.xml" data-colour="#00ffbf">Wolds Way Part 1 (Hull to Pocklington)</input></li>
+                    <li><input class="route" type="checkbox" value="WoldsWay.xml" data-colour="#00ffff">Full Wolds Way (Hull to Filey)</input></li>
+                    <li><input class="route" type="checkbox" value="TabularHillsWalk.xml" data-colour="#00ff00">Tabular Hills Walk (Hardmoors 160)</input></li>
+                    <li><input class="route" type="checkbox" value="Cleveland_Way.xml" data-colour="#80ff00">Cleveland Way (Lots of times)</input></li>
+                </ul>
+
+                <div class="sectionHeader">Other races</div>
+                <ul>
+                    <li><input class="route" type="checkbox" value="Spine2018.xml" data-colour="#bfff00">Spine Race (2018)</input></li>
+                    <li><input class="route" type="checkbox" value="leedsandliverpoolcanal.xml" data-colour="#ff4000">Liverpool To Leeds Canal Race</input></li>
+                    <li><input class="route" type="checkbox" value="Kacr.xml" data-colour="#0000ff">Bristol to London (KACR 2018)</input></li>
+                    <li><input class="route" type="checkbox" value="White_Rose_Ultra.xml" data-colour="#ffbf00">White Rose Ultra 100 Miles (Three laps of 30 + a bit)</input></li>
+                    <li><input class="route" type="checkbox" value="White_rose_ultra_2022.gpx" data-colour="#ff4000">White Rose Ultra (2022) New Route</input></li>
+                    <li><input class="route" type="checkbox" value="Convergence.xml" data-colour="#00bfff">Convergence (Malton to Hope)</input></li>
+                    <li><input class="route" type="checkbox" value="Lyke_Wake_Challenge.xml" data-colour="#00ff40">Lyke Wake Challenge</input></li>
+                    <li><input class="route" type="checkbox" value="efm_2017.xml" data-colour="#0040ff">Meriden to Doncaster (Escape From Meriden 2017)</input></li>
+                    <li><input class="route" type="checkbox" value="1066.xml" data-colour="#8000ff">1066</input></li>
+                    <li><input class="route" type="checkbox" value="ArcOfAttrition.xml" data-colour="#8000ff">Arc of Attrition</input></li>
+
+                    <li><input class="route" type="checkbox" value="The_Peak_District_100_2022.gpx" data-colour="#ff4000">Peak District 100</input></li>
+                    <li><input class="route" type="checkbox" value="south_downs_100.gpx" data-colour="#ff4000">South Downs 100</input></li>
+                    <li><input class="route" type="checkbox" value="TheLine.gpx" data-colour="#80ff00">The Line</input></li>   
+                </ul>
+
+                <div class="sectionHeader">Exploring</div>
+                <ul>
+                    <li><input class="route" type="checkbox" value="Selby_to_Leeds.xml" data-colour="#00bfff">Selby To Leeds</input></li>
+                    <li><input class="route" type="checkbox" value="Marsden_to_Hebden_Bridge_the_other_way.gpx" data-colour="#ff0000">Marsden to Hebden Bridge along canals</input></li>
+                    <li><input class="route" type="checkbox" value="Leeds_to_York.xml" data-colour="#ff0000">Leeds to York (Aire and Calder Navigation)</input></li>
+                    <li><input class="route" type="checkbox" value="3_Peaks.xml" data-colour="#ffff00">3 Peaks</input></li>
+                    <li><input class="route" type="checkbox" value="EdaleSkyline.xml" data-colour="#40ff00">Edale Skyline</input></li>
+                    <li><input class="route" type="checkbox" value="Minster_Way.xml" data-colour="#00ff80">Minster Way (Pocklington to York)</input></li>
+                    <li><input class="route" type="checkbox" value="WetherbyToYork.xml" data-colour="#0080ff">Wetherby To York (Home from work)</input></li>
+                    <li><input class="route" type="checkbox" value="Foss_Way.xml" data-colour="#4000ff">Foss Walk</input></li>
+                    <li><input class="route" type="checkbox" value="ebor_way_Ilkley_to_york_section.xml" data-colour="#ff008f">Ebor Way (Ilkley to York section) </input></li>
+                    <li><input class="route" type="checkbox" value="Dales_high_way_to_Skipton_and_the_Leeds_Liverpool_canal_back.xml" data-colour="#ff8000">Dales High way to Skipton loop</input></li>
+                    <li><input class="route" type="checkbox" value="Harrogate_ringway.gpx" data-colour="#00bfff">Harrogate Ringway (Clockwise)</input></li>
+                    <li><input class="route" type="checkbox" value="Hadrians_wall_part1.gpx" data-colour="#ff0000">Hadrian's Wall Day 1</input></li>
+                    <li><input class="route" type="checkbox" value="Hadrians_wall_part2.gpx" data-colour="#ff0000">Hadrian's Wall Day 2</input></li>
+                    <li><input class="route" type="checkbox" value="Harrogate_to_Leeds_via_Ilkley_moor.gpx" data-colour="#ff0000">Harrogate to Leeds via Ilkley Moor</input></li>
+                    <li><input class="route" type="checkbox" value="rochdale_canal.gpx" data-colour="#8000ff">Manchester to Hebden Bridge (Rochdale Canal)</input></li>
+                    <li><input class="route" type="checkbox" value="Bridlington_Filey_Scarborough.gpx" data-colour="#8000ff">Bridlington to Filey to Scarborough</input></li>
+                </ul>                
+            
+                <div class="sectionHeader"><a target="_blank" href="https://www.transpenninetrail.org.uk/">Trans Pennine Trail</a></div>
+                <ul>
+                    <li><input class="route" type="checkbox" value="Hornsea_to_York_along_the_Trans_Pennine_Trail.xml" data-colour="#80ff00">Hornsea to York</input></li>
+                    <li><input class="route" type="checkbox" value="York_To_Doncaster.xml" data-colour="#80ff00">York To Doncaster</input></li>
+                    <li><input class="route" type="checkbox" value="Doncaster_to_Meadowhall_TPT.xml" data-colour="#80ff00">Doncaster to Meadowhall</input></li>                
+                    <li><input class="route" type="checkbox" value="Barnsley_to_Leeds_along_the_TPT.gpx" data-colour="#80ff00">Barnsley to Leeds</input></li>                
+                    <li><input class="route" type="checkbox" value="Barnsley_to_Stalybridge_along_the_trans_pennine_trail.gpx" data-colour="#80ff00">Barnsley to Stalybridge</input></li>                
+                </ul>
+            </div>
+        </div>
+
+        <script type='text/javascript' src='running.js'></script>
+        <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=AoMlZ5rJywSt5Yeba_5_EpNUkmzPkotnJs5d0K5XC16zY6xxShIH4Ipny7xWCLFM &callback=loadMapScenario' async defer></script>
+    </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>London To Paris - David Betteridge</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <link rel="stylesheet" type="text/css" href="cycles.css">
+</head>
+
+<body>
+
+    <div class="row">
+
+        <div class="column" id='myMap' style='height: 100vh;'></div>
+
+        <div class="column" id='printoutPanel'>
+
+            <div class="title">London to Paris</div>
+
+            <ul>
+                <li><input class="route" type="checkbox" value="London_to_Paris_cycle_with_Mary_Day_one.gpx"
+                        data-colour="#ff0000">Day 1 - London to Heathfield</input></li>
+                <li><input class="route" type="checkbox" value="London_to_Paris_cycle_with_Mary_Day_2_part_one.gpx"
+                        data-colour="#ff4000">Day 2 (part 1) - Heathfield to Newhaven Port</input></li>
+                <li><input class="route" type="checkbox" value="London_to_Paris_cycle_with_Mary_Day_2_part_deux.gpx"
+                        data-colour="#ff8000">Day 2 (part 2) - Dieppe to Serqueux</input></li>
+                <li><input class="route" type="checkbox" value="London_to_Paris_cycle_with_Mary_Day_three.gpx"
+                        data-colour="#ffbf00">Day 3 - Serqueux to Gouvieux</input></li>
+                <li><input class="route" type="checkbox" value="London_to_Paris_cycle_with_Mary_Day_four.gpx"
+                        data-colour="#ffff00">Day 4 (part 1) - Gouvieux to Paris</input></li>
+                <li><input class="route" type="checkbox" value="London_to_Paris_cycle_with_Mary_Day_four_part_two_.gpx"
+                        data-colour="#bfff00">Day 4 (part 2) - Paris to campsite</input></li>
+            </ul>
+        </div>
+    </div>
+
+    <script type='text/javascript' src='cycles.js'></script>
+    <script type='text/javascript'
+        src='https://www.bing.com/api/maps/mapcontrol?key=AoMlZ5rJywSt5Yeba_5_EpNUkmzPkotnJs5d0K5XC16zY6xxShIH4Ipny7xWCLFM &callback=loadMapScenario'
+        async defer></script>
+</body>
+
+</html>

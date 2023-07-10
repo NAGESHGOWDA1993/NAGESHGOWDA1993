@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mr David Betteridge</title>
+    <link rel="stylesheet" type="text/css" href="/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="item-header_logo">
+            <a href="/index.html"><img src="/images/david_betteridge.png" alt="Mr David Betteridge"
+                    class="top_left_logo"></a>
+        </div>
+        <div class="item-header_text">
+            <span>David Betteridge</span>
+
+            <div class="filler"></div>
+
+            <div class="theme-switch-wrapper">
+                <em>Theme</em>
+
+                <select name="theme-selector" id="theme-selector">
+                    <option value="blue">Blue</option>
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                </select>
+            </div>
+        </div>
+
+
+
+        <div class="item-sidebar">
+            <ul>
+                <li><a href="/target_files/about.html">About me</a></li>
+                <li><a href="/target_files/running.html">My running</a></li>
+                <li><a href="/target_files/london_to_paris.html">London to Paris</a></li>
+                <li><a href="/familybikerides/index.html">Family bike rides</a></li>
+                <li><a href="/target_files/blogs.html">My blog</a></li>
+                <li><a href="https://www.meetup.com/York-Code-Dojo/">York Code Dojo</a></li>
+                <li><a href="https://yorkdevelopers.org">York Developers</a></li>
+                <li><a href="https://github.com/DavidBetteridge">My github account</a></li>
+                <li><a href="/resources">Some useful resources</a></li>
+            </ul>
+        </div>
+        <div class="item-content">
+            <div class="content-container">
+                <p>Consider the following code</p>
+<p>```c#
+static async Task Main(string[] args)
+{
+    if (File.Exists("Log.txt")) File.Delete("Log.txt");</p>
+<pre><code>File.AppendAllText("Log.txt", "Main 1\r\n");
+var task = AnAsyncOperation();
+
+File.AppendAllText("Log.txt", "Main 2\r\n");
+Thread.Sleep(TimeSpan.FromSeconds(1));
+
+File.AppendAllText("Log.txt", "Main 3\r\n");
+await task;
+
+File.AppendAllText("Log.txt", "Main 4\r\n");
+</code></pre>
+<p>}</p>
+<p>public static async Task AnAsyncOperation()
+{
+    throw new ApplicationException("An unexpected exception.");
+}
+```</p>
+<p>Do you think the entry <strong>Main 3</strong> gets written to the log file,  or will the exception be throw before that line of code gets reached?</p>
+<p>As you should have just found, the exception isn't thrown until you <em>await</em> t.   </p>
+<p>You can think of the <strong>await</strong> keyword working as follows.   Assume that Task<T> is a box which contains 'Either' our result (of type T) or an exception.  We need to get the value out of the box,  but we can't access it's value directly.  We can however give it a function which will be called once the task is complete.  To allow for the fact that the task might have faulted (error-ed) we supply it with two functions. </p>
+<p><strong>await</strong> could then be written as</p>
+<p><code>c#
+t.ExtractValue (  
+            ((System.AggregateException ae) =&gt; throw ae.innerException),
+            ((T result) =&gt; return result )
+       );</code></p>
+<p>These functions are then only called once the task has completed (either successfully or with a fault).  </p>
+<p>Note,  this is a way of thinking about it,  rather than how it is actually implemented.</p>
+            </div>
+        </div>
+    </div>
+    <script type='text/javascript' src='/theme.js'></script>
+
+</body>
+
+</html>
