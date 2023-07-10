@@ -20,7 +20,7 @@
 - 📫 How to reach me **nageshak9743@gmail.com**
 
 - ⚡ Fun fact **I am Funny**
-![Dino]( https://github.com/NAGESHGOWDA1993/NAGESHGOWDA1993/blob/main/dino.gif)
+![Tech]( https://github.com/NAGESHGOWDA1993/NAGESHGOWDA1993/blob/main/thoughtworks-gif_dribbble.gif)
 <h3 align="left">Connect with me:</h3>
 <p align="left">
 <a href="https://linkedin.com/in/nagesha k s" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="nagesha k s" height="30" width="40" /></a>
