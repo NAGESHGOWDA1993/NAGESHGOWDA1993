@@ -9,7 +9,7 @@
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=nageshagowda1993&label=Profile%20views&color=0e75b6&style=flat" alt="nageshagowda1993" /> </p>
 
-- 🔭 I’m currently working on **AWS&Azure DevOps Projects**
+- 🔭 I’m currently working on **AWS&Azure,GCP DevOps Projects**
 
 - 🌱 I’m currently learning **DevOps New Tools**
 
