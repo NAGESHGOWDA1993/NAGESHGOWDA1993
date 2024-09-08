@@ -1,6 +1,6 @@
 ![logo](https://github.com/NAGESHGOWDA1993/NAGESHGOWDA1993/blob/main/Nagesha.PNG)
 <h1 align="center">Hi 👋, I'm Nagesha KS</h1>
-<h3 align="center">A passionate Cloud&DevOps Engineer</h3>
+<h3 align="center">A passionate Cloud&DevOps Engineer</h3> 
 
 <img align="left" width="47%" src="https://akumeninc.com/wp-content/uploads/2020/02/Animation-1.gif"/>
 <img align="left" width="47%" src="https://github-readme-stats.vercel.app/api?username=NAGESHGOWDA1993&show_icons=true&theme=omni"/>
