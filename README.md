@@ -4,7 +4,7 @@
 
 <img align="left" width="47%" src="https://akumeninc.com/wp-content/uploads/2020/02/Animation-1.gif"/>
 <img align="left" width="47%" src="https://github-readme-stats.vercel.app/api?username=NAGESHGOWDA1993&show_icons=true&theme=omni"/>
-<img align="left" width="47%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=NAGESHGOWDA1993&layout=compact&theme=omni"/>
+<img align="left" width="48%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=NAGESHGOWDA1993&layout=compact&theme=omni"/>
 
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=nageshagowda1993&label=Profile%20views&color=0e75b6&style=flat" alt="nageshagowda1993" /> </p>
